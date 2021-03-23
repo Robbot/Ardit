@@ -59,4 +59,3 @@ print("Marry pays=", marry.pays(bill=the_bill, flatmate2=john))
 
 pdf_report = PdfReport(filename="Report1.pdf")
 pdf_report.generate(flatmate1=john, flatmate2=marry,bill=the_bill)
-© 2021 GitHub, Inc.
