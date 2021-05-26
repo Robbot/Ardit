@@ -11,7 +11,7 @@ print(content)
 
 def occurences(character,filepath):
     with open(filepath,"r") as myfile:
-        content= myfile.read()
+        content = myfile.read()
         myfile.close()
     return content.count(character)
 
