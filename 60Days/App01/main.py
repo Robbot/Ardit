@@ -16,11 +16,20 @@ while True:
             file.writelines(todos)
             file.close()
         case 'show':
-            file  = open('files/todos.txt', 'r')
+            file = open('files/todos.txt', 'r')
             todos = file.readlines()
             file.close()
             
-            for index, item in enumerate(todos):
+            new_todos = []
+            
+            for item in todos:
+                new_item = item.strip('\n')
+                new_todos.append(new_item)
+            # Alternatively instead you can use list comprehension
+            # new_todos = [item.strip('\n') for item in todos]
+            # so one line instead instead 5 lines
+            
+            for index, item in enumerate(new_todos):
                 row = f"{index + 1}-{item}"
                 print(row)
         case 'edit':
@@ -34,5 +43,5 @@ while True:
         case 'exit':
             break
         case _:
-            print ("Hey, you entered an unknown command")
-print ("Bye")
+            print("Hey, you entered an unknown command")
+print("Bye")
