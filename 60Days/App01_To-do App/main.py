@@ -2,40 +2,26 @@ while True:
     user_action = input("Type add, show, edit, complete or exit: ")
     user_action = user_action.strip()
     
-    
-    if 'add' in user_action:
-        todo = user_action [4:]
+    if user_action.startswith('add'):
+        todo = user_action[4:]
         
-        file = open('files/todos.txt', 'r')
-        todos = file.readlines()
-        file.close()
-        
-        #Alternatively use with instead, so you don't need close() this is recommended method.
-        #with open('files/todos.txt', 'r') as file:
-        #    todos = file.readlines()
-        
-        todos.append(todo)
-        
-        with open('files/todos.txt', 'w') as file:
-            file.writelines(todos)
-        
-    elif 'show' in user_action:
         with open('files/todos.txt', 'r') as file:
             todos = file.readlines()
         
-        new_todos = []
+        todos.append(todo + '\n')
         
-        for item in todos:
-            new_item = item.strip('\n')
-            new_todos.append(new_item)
-        # Alternatively instead you can use list comprehension
-        # new_todos = [item.strip('\n') for item in todos]
-        # so one line instead instead 5 lines
-        
-        for index, item in enumerate(new_todos):
+        with open('files/todos.txt', 'w') as file:
+            file.writelines(todos)
+    
+    elif user_action.startswith('show'):
+        with open('files/todos.txt', 'r') as file:
+            todos = file.readlines()
+            
+        for index, item in enumerate(todos):
+            item = item.strip('\n')
             row = f"{index + 1}-{item}"
             print(row)
-    elif 'edit' in user_action:
+    elif user_action.startswith('edit'):
         number = int(user_action[5:])
         number = number - 1
         
@@ -47,8 +33,8 @@ while True:
         
         with open('files/todos.txt', 'w') as file:
             file.writelines(todos)
-        
-    elif 'complete' in user_action:
+    
+    elif user_action.startswith('complete'):
         number = int(user_action[9:])
         index = number - 1
         
@@ -62,7 +48,7 @@ while True:
             file.writelines(todos)
         message = f"Todo {todo_to_remove} was removed from the list"
         print(message)
-    elif 'exit' in user_action:
+    elif user_action.startswith('exit'):
         break
     else:
         print("Command is not valid")
