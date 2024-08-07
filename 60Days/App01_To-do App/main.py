@@ -16,38 +16,49 @@ while True:
     elif user_action.startswith('show'):
         with open('files/todos.txt', 'r') as file:
             todos = file.readlines()
-            
+        
         for index, item in enumerate(todos):
             item = item.strip('\n')
             row = f"{index + 1}-{item}"
             print(row)
     elif user_action.startswith('edit'):
-        number = int(user_action[5:])
-        number = number - 1
-        
-        with open('files/todos.txt', 'r') as file:
-            todos = file.readlines()
-        
-        new_todo = input("Enter new todo: ")
-        todos[number] = new_todo + '\n'
-        
-        with open('files/todos.txt', 'w') as file:
-            file.writelines(todos)
+        try:
+            number = int(user_action[5:])
+            number = number - 1
+            
+            with open('files/todos.txt', 'r') as file:
+                todos = file.readlines()
+            
+            new_todo = input("Enter new todo: ")
+            todos[number] = new_todo + '\n'
+            
+            with open('files/todos.txt', 'w') as file:
+                file.writelines(todos)
+        except ValueError:
+            print("Provide command 'edit' followed by the number of the item")
+            continue
     
     elif user_action.startswith('complete'):
-        number = int(user_action[9:])
-        index = number - 1
-        
-        with open('files/todos.txt', 'r') as file:
-            todos = file.readlines()
-        
-        todo_to_remove = todos[index].strip('\n')
-        todos.pop(index)
-        
-        with open('files/todos.txt', 'w') as file:
-            file.writelines(todos)
-        message = f"Todo {todo_to_remove} was removed from the list"
-        print(message)
+        try:
+            number = int(user_action[9:])
+            index = number - 1
+            
+            with open('files/todos.txt', 'r') as file:
+                todos = file.readlines()
+            
+            todo_to_remove = todos[index].strip('\n')
+            todos.pop(index)
+            
+            with open('files/todos.txt', 'w') as file:
+                file.writelines(todos)
+            message = f"Todo {todo_to_remove} was removed from the list"
+            print(message)
+        except IndexError:
+            print("There is no index with this number. Try again.")
+            continue
+        except ValueError:
+            print("Please provide the command again followed by the number of the item to complete")
+            continue
     elif user_action.startswith('exit'):
         break
     else:
